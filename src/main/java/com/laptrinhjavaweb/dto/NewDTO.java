@@ -6,6 +6,7 @@ public class NewDTO {
 	private String shortDescripttion;
 	private String categoryCode;
 	private String thumbnail;
+	
 	public String getTitle() {
 		return title;
 	}
