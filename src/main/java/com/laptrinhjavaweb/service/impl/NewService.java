@@ -26,10 +26,18 @@ public class NewService implements INewService  {
 	@Override
 	public NewDTO save(NewDTO newDTO) {
 		CategoryEntity categoryEntity = categoryRepository.findOneByCode(newDTO.getCategoryCode());
-		NewEntity newEntity = newConverter.toEntity(newDTO);
+		NewEntity newEntity = new NewEntity();
+		if(newDTO != null && newDTO.getId() != null) {
+			NewEntity oldNew = newRepository.findOne(newDTO.getId());
+			newEntity = newConverter.toEntity(newDTO, oldNew);
+		} else {
+			newEntity = newConverter.toEntity(newDTO);
+		}
+		
 		newEntity.setCategory(categoryEntity);
 		newEntity = newRepository.save(newEntity);
 		
 		return newConverter.toDTO(newEntity);
 	}
+
 }
